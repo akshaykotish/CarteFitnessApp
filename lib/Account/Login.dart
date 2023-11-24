@@ -24,6 +24,7 @@ class _LoginState extends State<Login> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
+  bool progress = false;
   bool isRequestOTP = true;
   bool isOTP = false;
   bool isVerify = false;
@@ -47,32 +48,40 @@ class _LoginState extends State<Login> {
           await _auth.signInWithCredential(credential).then(
                 (value) => print('Logged In Successfully'),
           );
+          progress = false;
+          setState(() {
+
+          });
         },
         verificationFailed: (FirebaseAuthException e) {
-          ErrorMessage = "Please enter correct OTP.";
+          ErrorMessage = "OTP request failed.";
+          progress = false;
           setState(() {
 
           });
           print(e.message);
         },
         codeSent: (String verificationId, int? resendToken) {
+          ErrorMessage = "";
           receivedID = verificationId;
           isOTP = true;
           isVerify = true;
           isRequestOTP = false;
+          progress = false;
 
           setState(() {});
 
           Timer(const Duration(seconds: 60), (){
             isReqestOTPAgain = true;
+            progress = false;
             setState(() {
 
             });
           });
         },
         codeAutoRetrievalTimeout: (String verificationId) {
-          print('TimeOut');
           isReqestOTPAgain = true;
+          progress = false;
           setState(() {
 
           });
@@ -88,7 +97,11 @@ class _LoginState extends State<Login> {
     await _auth
         .signInWithCredential(credential)
         .then((value) async {
-      print('User Login In Successful');
+
+          progress = true;
+          setState(() {
+
+          });
 
       Account userData = Account("", "", fullName.text, "+91${Phone.text}", "", "", "", "", "", "", "", "", "", false, DateTime.now(), "");
       var account = await Account.PullFromFirebase("+91${Phone.text}");
@@ -102,7 +115,8 @@ class _LoginState extends State<Login> {
       }
       //print("DoC ID is " + userData.DocID + " and " + userData.Address1 + " or " + account.Address1);
 
-      ErrorMessage = "Login suceed, wait or verify again.";
+          progress = false;
+      ErrorMessage = "Login succeed, wait or verify again.";
       setState(() {
 
       });
@@ -213,6 +227,10 @@ class _LoginState extends State<Login> {
               child: GestureDetector(
                 onTap: (){
                   isReqestOTPAgain = false;
+                  progress = true;
+                  setState(() {
+
+                  });
                   RequestOTP();
                 },
                 child: Container(
@@ -255,6 +273,7 @@ class _LoginState extends State<Login> {
                         visible: isReqestOTPAgain,
                         child: GestureDetector(
                           onTap: (){
+                            progress = true;
                             RequestOTP();
                             ErrorMessage = "OTP resent.";
                             setState(() {
@@ -287,6 +306,14 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
+            Visibility(
+              visible: progress,
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                )),
             Container(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
               child: Text(ErrorMessage, style: StyleOfTexts.ErrorMessage(),),

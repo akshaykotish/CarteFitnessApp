@@ -45,5 +45,27 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>dev.flutter.background.refresh</string>
+    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Used to collect location data.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Used to collect location data in the background.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Used to collect location data in the background.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>location</string>
+    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs access to location when in the background.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <key>NSCameraUsageDescription</key>
+    <key>NSMicrophoneUsageDescription</key>
 </dict>
 </plist>

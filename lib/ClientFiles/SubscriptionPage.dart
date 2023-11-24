@@ -27,7 +27,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   Future<void> LoadSubscription()
   async {
-    var SubscriptionWidget = <Widget>[];
+    var _SubscriptionWidget = <Widget>[];
 
     String GymDocID = await Cookies.ReadCookie("GymDocID");
     var Subscriptions = await Subscription.LoadSubscriptions(GymDocID);
@@ -40,9 +40,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
 
         Subscription subscription = Subscription(
-          subdoc.data()["SubScriptionNameIn"],
-          subdoc.data()["Details"],
-          subdoc.data()["Image"],
+            subdoc.data()["SubScriptionNameIn"],
+            subdoc.data()["Details"],
+            subdoc.data()["Image"],
             double.parse(subdoc.data()["Cost"]),
             double.parse(subdoc.data()["MarginPer"]),
             double.parse(subdoc.data()["DiscountPer"]),
@@ -54,7 +54,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         
         String SubDocID = subdoc.id;
         
-        SubscriptionWidget.add(
+        _SubscriptionWidget.add(
           GestureDetector(
             onTap: (){
               subscription_onclick = subscription;
@@ -65,12 +65,18 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
                 color: ColorFromHexCode("#231539"),
               ),
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 children: <Widget>[
-                  SizedBox(
-                      width: 100,
+                  Container(
+                      height: 70,
+                      width: 70,
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                      color: ColorFromHexCode("#14042D"),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -96,7 +102,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         if(i == Subscriptions.length - 1)
           {
             setState(() {
-              SubscriptionWidget = SubscriptionWidget;
+              SubscriptionWidget = _SubscriptionWidget;
             });
           }
       }
@@ -211,22 +217,24 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          color: ColorFromHexCode("#130B20"),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(widget.gym.GymName, style: TextStyle(color: ColorFromHexCode("#D71C6B"), fontWeight: FontWeight.bold, fontSize: 50),),
-            const SizedBox(height: 30,),
-            const Text("Choose Your Subscription", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),),
-            Column(
-              children: SubscriptionWidget,
-            )
-          ],
-        )
+      body: SingleChildScrollView(
+        child: Container(
+            color: ColorFromHexCode("#130B20"),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(widget.gym.GymName, style: TextStyle(color: ColorFromHexCode("#D71C6B"), fontWeight: FontWeight.bold, fontSize: 35),),
+              const SizedBox(height: 30,),
+              const Text("Choose Your Subscription", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),),
+              Column(
+                children: SubscriptionWidget,
+              )
+            ],
+          )
+        ),
       ),
     );
   }

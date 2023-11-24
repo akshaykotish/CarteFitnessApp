@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBlyfVk6RPr5HU19K1aq7SngYf8Eu0PXYQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>728194461176</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.akshaykotishandco.infinity.infinity</string>
+	<key>PROJECT_ID</key>
+	<string>carte-gym</string>
+	<key>STORAGE_BUCKET</key>
+	<string>carte-gym.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:728194461176:ios:56f122e3d785a4a5997a0d</string>
+</dict>
+</plist>
