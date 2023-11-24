@@ -36,22 +36,22 @@ class _AdminHomeState extends State<AdminHome> {
           children: <Widget>[
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>GymCordsSetup()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const GymCordsSetup()));
               },
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 color: Colors.grey.shade100,
-                child: Text("Setup Locations"),
+                child: const Text("Setup Locations"),
               ),
             ),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>GymTracing()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const GymTracing()));
               },
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 color: Colors.grey.shade100,
-                child: Text("Location Tracing"),
+                child: const Text("Location Tracing"),
               ),
             ),
           ],

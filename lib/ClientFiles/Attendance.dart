@@ -17,7 +17,7 @@ class _AttendanceState extends State<Attendance> {
   var attendaceswid = <Widget>[];
 
   Future<void> LoadAttendance() async {
-    var _attendaceswid = <Widget>[];
+    var attendaceswid = <Widget>[];
 
 
       var attandances = await Account.LoadAttendance(widget.account.DocID);
@@ -28,27 +28,27 @@ class _AttendanceState extends State<Attendance> {
           var attend = attandances.docs[i];
 
           String keyDate = attend.id.toString();
-          String newDate = keyDate.substring(0,2) + "/" + keyDate.substring(2,4) + "/" + keyDate.substring(4,8);
+          String newDate = "${keyDate.substring(0,2)}/${keyDate.substring(2,4)}/${keyDate.substring(4,8)}";
 
-          print("attandances" + attandances.docs[i].data()["EntryTime"].toString());
-          _attendaceswid.add(
+          print("attandances${attandances.docs[i].data()["EntryTime"]}");
+          attendaceswid.add(
               Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(15),
+                margin: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   color: ColorFromHexCode("#231539"),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                    Row(
                      children: <Widget>[
-                       Icon(Icons.co_present, color: Colors.white, size: 18,),
-                       Text(newDate, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),),
+                       const Icon(Icons.co_present, color: Colors.white, size: 18,),
+                       Text(newDate, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),),
                      ],
                    ),
-                    Row(
+                    const Row(
                       children: <Widget>[
                         Text("Entry Time",style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.white),),
                         SizedBox(width: 100,),
@@ -57,9 +57,9 @@ class _AttendanceState extends State<Attendance> {
                     ),
                     Row(
                       children: <Widget>[
-                        Text(attend.data()["EntryTime"]!.toDate().toString(), style: TextStyle(fontSize: 10, color: Colors.white),),
-                        SizedBox(width: 40,),
-                        Text(attend.data()!["ExitTime"] == null ? "-" : attend.data()["ExitTime"].toDate().toString(), style: TextStyle(fontSize: 10, color: Colors.white),),
+                        Text(attend.data()["EntryTime"]!.toDate().toString(), style: const TextStyle(fontSize: 10, color: Colors.white),),
+                        const SizedBox(width: 40,),
+                        Text(attend.data()!["ExitTime"] == null ? "-" : attend.data()["ExitTime"].toDate().toString(), style: const TextStyle(fontSize: 10, color: Colors.white),),
                       ],
                     )
                   ],
@@ -69,7 +69,7 @@ class _AttendanceState extends State<Attendance> {
           if(i == attandances.docs.length - 1)
             {
               setState(() {
-                attendaceswid = _attendaceswid;
+                attendaceswid = attendaceswid;
               });
             }
         }
@@ -85,9 +85,9 @@ class _AttendanceState extends State<Attendance> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 20, right: 20),
+      margin: const EdgeInsets.only(left: 20, right: 20),
       clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
       ),
       child: Column(
@@ -95,10 +95,10 @@ class _AttendanceState extends State<Attendance> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(left: 0, top: 0, bottom: 0),
-              padding: EdgeInsets.all(10),
+              margin: const EdgeInsets.only(left: 0, top: 0, bottom: 0),
+              padding: const EdgeInsets.all(10),
               child: Text("Attendance", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorFromHexCode("#ECF5FF")),)),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height/2 - 100,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(

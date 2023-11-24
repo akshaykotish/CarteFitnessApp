@@ -64,7 +64,7 @@ class Subscription{
   
   static GetCurrentSubscriptionOrder(String AccountDocID) async {
     var subs = await FirebaseFirestore.instance.collection("Accounts").doc(AccountDocID).collection("Subscriptions").where("ExpiryDate",  isGreaterThanOrEqualTo: DateTime.now()).get();
-    print("Current Subscription:- " + subs.docs.length.toString());
+    print("Current Subscription:- ${subs.docs.length}");
     return subs.docs;
   }
 
@@ -76,7 +76,7 @@ class Subscription{
 
   static CheckDefaultSubscriptionOrder(String AccountDocID, String SubDocID) async {
     var subs = await FirebaseFirestore.instance.collection("Accounts").doc(AccountDocID).collection("Subscriptions").where("ExpiryDate",  isGreaterThanOrEqualTo: DateTime.now()).where("SubscriptionDocID", isEqualTo: SubDocID).get();
-    print("Current Subscription:- " + subs.docs.length.toString());
+    print("Current Subscription:- ${subs.docs.length}");
     return subs.docs;
   }
 

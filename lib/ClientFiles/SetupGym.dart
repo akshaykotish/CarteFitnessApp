@@ -19,7 +19,7 @@ class _SetupGymState extends State<SetupGym> {
   var GymsWidgets = <Widget>[];
 
   Future<void> LoadGyms() async {
-    var _GymsWidgets = <Widget>[];
+    var GymsWidgets = <Widget>[];
     var Gyms = await Gym.GetGyms();
    for(int i=0; i<Gyms.length; i++) {
      Gym gym = Gym(
@@ -31,7 +31,7 @@ class _SetupGymState extends State<SetupGym> {
          Gyms[i].data()["City"].toString(),
          Gyms[i].data()["State"].toString(),
          Gyms[i].data()["Country"].toString());
-     _GymsWidgets.add(
+     GymsWidgets.add(
          GestureDetector(
            onTap: (){
              OnGymClick(gym, Gyms[i]);
@@ -39,25 +39,25 @@ class _SetupGymState extends State<SetupGym> {
            child: Container(
              decoration: BoxDecoration(
                color: ColorFromHexCode("#231539"),
-               borderRadius: BorderRadius.all(Radius.circular(20))
+               borderRadius: const BorderRadius.all(Radius.circular(20))
              ),
-             padding: EdgeInsets.all(20),
+             padding: const EdgeInsets.all(20),
              child: Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
-                 Text(gym.GymName, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),),
-                 Text(gym.Address1 + " "  + gym.Address2 + " " + gym.City, style: TextStyle(fontSize: 10, color: Colors.white),),
+                 Text(gym.GymName, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),),
+                 Text("${gym.Address1} ${gym.Address2} ${gym.City}", style: const TextStyle(fontSize: 10, color: Colors.white),),
                ],
              ),
            ),
          )
      );
 
-     print(_GymsWidgets.length);
+     print(GymsWidgets.length);
      if (i == Gyms.length - 1)
      {
          setState(() {
-           GymsWidgets = _GymsWidgets;
+           GymsWidgets = GymsWidgets;
          });
      }
      }
@@ -90,7 +90,7 @@ class _SetupGymState extends State<SetupGym> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text("Choose your Gym...", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorFromHexCode("#F41F75")),),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

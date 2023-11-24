@@ -25,7 +25,7 @@ class _GymHeaderState extends State<GymHeader> {
       child: Row(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(left: 20, top: 25, bottom: 0, right: 10),
+            margin: const EdgeInsets.only(left: 20, top: 25, bottom: 0, right: 10),
             alignment: Alignment.bottomLeft,
             child: Text(Gym.CurrentGym.GymName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: ColorFromHexCode("#F41E74")),),
           ),

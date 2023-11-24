@@ -23,7 +23,7 @@ class HandleDoorRequest{
   async {
     String? LastDoorRequest = await Cookies.ReadCookie("LastDoorRequest");
 
-    print("AV1" + LastDoorRequest.toString());
+    print("AV1$LastDoorRequest");
     if(LastDoorRequest == null)
       {
         print("AV12");
@@ -32,7 +32,7 @@ class HandleDoorRequest{
 
     DateTime dateTime = await GetLastRequest();
     int diff = dateTime.difference(DateTime.now()).inMinutes.abs();
-    print("AV2" + diff.toString());
+    print("AV2$diff");
     if(diff > 60)
       {
         print("AV3");
@@ -45,14 +45,12 @@ class HandleDoorRequest{
 
   static Future<void> OpenDoor(Account account) async {
     String GymDocID = await Cookies.ReadCookie("GymDocID");
-    if(GymDocID != null) {
-      Gym.ControlGymDoor(GymDocID, true);
-      print("Door Unlocked");
-      Gym.GymDoorLog(GymDocID, true, Account.account);
-      Timer(Duration(seconds: 20), (){
-        Gym.ControlGymDoor(GymDocID, false);
-        Gym.GymDoorLog(GymDocID, false, Account.account);
-      });
+    Gym.ControlGymDoor(GymDocID, true);
+    print("Door Unlocked");
+    Gym.GymDoorLog(GymDocID, true, Account.account);
+    Timer(const Duration(seconds: 20), (){
+      Gym.ControlGymDoor(GymDocID, false);
+      Gym.GymDoorLog(GymDocID, false, Account.account);
+    });
     }
-  }
 }

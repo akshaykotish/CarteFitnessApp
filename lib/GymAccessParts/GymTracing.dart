@@ -29,14 +29,14 @@ class _GymTracingState extends State<GymTracing> {
 
   Future<void> StartTracing() async {
     print("Start");
-    var _wigs = <Widget>[];
-    timer = await Timer.periodic(Duration(milliseconds: 500), (timer) async {
+    var wigs = <Widget>[];
+    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) async {
       var Position = await CurrentLocation.GetPositions();
       Lats.add(Position.latitude);
       Longs.add(Position.longitude);
-      _wigs.add(Container(child: Text(Position.latitude.toString() + " " + Position.longitude.toString()),));
+      wigs.add(Container(child: Text("${Position.latitude} ${Position.longitude}"),));
       setState(() {
-        wigs = _wigs;
+        wigs = wigs;
       });
     });
   }
@@ -82,7 +82,7 @@ class _GymTracingState extends State<GymTracing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -93,8 +93,8 @@ class _GymTracingState extends State<GymTracing> {
                 StartTracing();
               },
               child: Container(
-                margin: EdgeInsets.all(20),
-                child: Text("Start"),
+                margin: const EdgeInsets.all(20),
+                child: const Text("Start"),
               ),
             ),
             GestureDetector(
@@ -102,17 +102,17 @@ class _GymTracingState extends State<GymTracing> {
                 StopTracing();
               },
               child: Container(
-                margin: EdgeInsets.all(20),
-                child: Text("Stop"),
+                margin: const EdgeInsets.all(20),
+                child: const Text("Stop"),
               ),
             ),
             Container(
-              margin: EdgeInsets.all(20),
-              child: Text(smallestLat.toString() +  " " + biggestLat.toString()),
+              margin: const EdgeInsets.all(20),
+              child: Text("$smallestLat $biggestLat"),
             ),
             Container(
-              margin: EdgeInsets.all(20),
-              child: Text(smallestLong.toString() +  " " + biggestLong.toString()),
+              margin: const EdgeInsets.all(20),
+              child: Text("$smallestLong $biggestLong"),
             ),
             Container(
               height: 400,
@@ -138,7 +138,7 @@ class _GymTracingState extends State<GymTracing> {
                 Navigator.pop(context);
               },
               child: Container(
-                child: Text("Submit"),
+                child: const Text("Submit"),
               ),
             )
           ],

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:infinity/SplashScreens/CarteScreen.dart';
@@ -53,7 +52,7 @@ class _GymScreenState extends State<GymScreen> {
   String GYMNAME = "It's a Carte Gym";
   Future<void> CheckGymName() async {
     String? ster = await Cookies.ReadCookie("GymName");
-    print(ster.toString() + " ster");
+    print("$ster ster");
     if(ster != null)
       {
         GYMNAME = ster;
@@ -69,11 +68,11 @@ class _GymScreenState extends State<GymScreen> {
     LoadGym();
     LoadGymCords();
     super.initState();
-    Timer(Duration(
+    Timer(const Duration(
       seconds: 3,
     ), (){
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => CarteScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const CarteScreen()));
     });
   }
 

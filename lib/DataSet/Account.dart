@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Account{
-
+class Account {
   static late Account account;
 
   String FirstName = "";
@@ -21,10 +20,26 @@ class Account{
   DateTime TimeStamp = DateTime.now();
   String DocID = "";
 
-  Account(this.FirstName, this.LastName, this.FullName, this.Phone, this.Email, this.Address1, this.Address2, this.City, this.State, this.Country, this.PinCode, this.LatLong, this.AddressName, this.Admin, this.TimeStamp, this.DocID);
+  Account(
+      this.FirstName,
+      this.LastName,
+      this.FullName,
+      this.Phone,
+      this.Email,
+      this.Address1,
+      this.Address2,
+      this.City,
+      this.State,
+      this.Country,
+      this.PinCode,
+      this.LatLong,
+      this.AddressName,
+      this.Admin,
+      this.TimeStamp,
+      this.DocID);
 
   static PushToFirebase(Account account) async {
-    var db = await FirebaseFirestore.instance;
+    var db = FirebaseFirestore.instance;
     var doc = await db.collection("Accounts").add({
       "FirstName": account.FirstName,
       "LastName": account.LastName,
@@ -43,13 +58,12 @@ class Account{
       "TimeStamp": account.TimeStamp,
     });
     account.DocID = doc.id;
-    print("User updated" + doc.id);
+    print("User updated${doc.id}");
     return account;
   }
 
-  static PushToFirebaseOnID(Account account, String DocID)
-  async {
-    var db = await FirebaseFirestore.instance;
+  static PushToFirebaseOnID(Account account, String DocID) async {
+    var db = FirebaseFirestore.instance;
     var doc = await db.collection("Accounts").doc(DocID).set({
       "FirstName": account.FirstName,
       "LastName": account.LastName,
@@ -73,16 +87,17 @@ class Account{
   }
 
   static PullFromFirebase(Phone) async {
-    var db = await FirebaseFirestore.instance;
-    var doc = await db.collection("Accounts").where(
-        "Phone", isEqualTo: Phone).get();
+    var db = FirebaseFirestore.instance;
+    var doc =
+        await db.collection("Accounts").where("Phone", isEqualTo: Phone).get();
 
-    var account = null;
+    Account account = Account("", "", "", "", "", "", "", "", "", "", "", "",
+        "", false, DateTime.now(), "");
 
-    if (doc.docs.length != 0) {
+    if (doc.docs.isNotEmpty) {
       var reqDoc = doc.docs[0];
       var data = reqDoc.data();
-      account = new Account(
+      account = Account(
           data["FirstName"].toString(),
           data["LastName"].toString(),
           data["FullName"].toString(),
@@ -98,35 +113,51 @@ class Account{
           data["AddressName"].toString(),
           data["Admin"],
           DateTime.now(),
-          reqDoc.id
-      );
+          reqDoc.id);
     }
     return account;
   }
 
+  static Future<void> MarkAttendanceEntry(String DocID) async {
+    String Date = DateTime.now().day.toString() +
+        DateTime.now().month.toString() +
+        DateTime.now().year.toString();
 
-   static Future<void> MarkAttendanceEntry(String DocID) async {
-     String Date = DateTime.now().day.toString() + DateTime.now().month.toString() + DateTime.now().year.toString();
-
-    var Att = await FirebaseFirestore.instance.collection("Accounts").doc(DocID).collection("Attendance").doc(Date).get();
-    if(Att.exists == false) {
-      var Attendance = await FirebaseFirestore.instance.collection("Accounts")
-          .doc(DocID).collection("Attendance").doc(Date)
-          .set({
-        "EntryTime": DateTime.now()
-      });
+    var Att = await FirebaseFirestore.instance
+        .collection("Accounts")
+        .doc(DocID)
+        .collection("Attendance")
+        .doc(Date)
+        .get();
+    if (Att.exists == false) {
+      var Attendance = await FirebaseFirestore.instance
+          .collection("Accounts")
+          .doc(DocID)
+          .collection("Attendance")
+          .doc(Date)
+          .set({"EntryTime": DateTime.now()});
     }
   }
+
   static Future<void> MarkAttendanceExit(String DocID) async {
-    String Date = DateTime.now().day.toString() + DateTime.now().month.toString() + DateTime.now().year.toString();
-    var Attendance = await FirebaseFirestore.instance.collection("Accounts").doc(DocID).collection("Attendance").doc(Date).set({
-      "ExitTime": DateTime.now()
-    }, SetOptions(merge: true));
+    String Date = DateTime.now().day.toString() +
+        DateTime.now().month.toString() +
+        DateTime.now().year.toString();
+    var Attendance = await FirebaseFirestore.instance
+        .collection("Accounts")
+        .doc(DocID)
+        .collection("Attendance")
+        .doc(Date)
+        .set({"ExitTime": DateTime.now()}, SetOptions(merge: true));
   }
 
-  static LoadAttendance(String DocID)
-  async {
-    var Attendances = await FirebaseFirestore.instance.collection("Accounts").doc(DocID).collection("Attendance").orderBy("EntryTime",  descending: true).get();
+  static LoadAttendance(String DocID) async {
+    var Attendances = await FirebaseFirestore.instance
+        .collection("Accounts")
+        .doc(DocID)
+        .collection("Attendance")
+        .orderBy("EntryTime", descending: true)
+        .get();
     return Attendances;
   }
 }

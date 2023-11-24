@@ -27,19 +27,19 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   Future<void> LoadSubscription()
   async {
-    var _SubscriptionWidget = <Widget>[];
+    var SubscriptionWidget = <Widget>[];
 
     String GymDocID = await Cookies.ReadCookie("GymDocID");
     var Subscriptions = await Subscription.LoadSubscriptions(GymDocID);
 
-    print(Subscriptions.length.toString() +  " GymDocID" + GymDocID);
+    print("${Subscriptions.length} GymDocID$GymDocID");
 
     for(int i=0; i<Subscriptions.length; i++)
       {
         var subdoc = Subscriptions[i];
 
 
-        Subscription subscription = new Subscription(
+        Subscription subscription = Subscription(
           subdoc.data()["SubScriptionNameIn"],
           subdoc.data()["Details"],
           subdoc.data()["Image"],
@@ -54,7 +54,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         
         String SubDocID = subdoc.id;
         
-        _SubscriptionWidget.add(
+        SubscriptionWidget.add(
           GestureDetector(
             onTap: (){
               subscription_onclick = subscription;
@@ -62,29 +62,29 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             },
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
                 color: ColorFromHexCode("#231539"),
               ),
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: <Widget>[
-                  Container(
+                  SizedBox(
                       width: 100,
                       child: Column(
                         children: <Widget>[
                           Container(
-                            child: Text(subscription.Month.toString(), style: TextStyle(fontSize: 30, color: Colors.white),),
+                            child: Text(subscription.Month.toString(), style: const TextStyle(fontSize: 30, color: Colors.white),),
                           ),
-                          Text("Months", style: TextStyle(color: Colors.white),),
+                          const Text("Months", style: TextStyle(color: Colors.white),),
                         ],
                       )
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(subscription.SubscriptionName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
-                      Text("₹ " + subscription.Price.toString(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))
+                      Text(subscription.SubscriptionName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                      Text("₹ ${subscription.Price}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))
                     ],
                   ),
                 ],
@@ -96,7 +96,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         if(i == Subscriptions.length - 1)
           {
             setState(() {
-              SubscriptionWidget = _SubscriptionWidget;
+              SubscriptionWidget = SubscriptionWidget;
             });
           }
       }
@@ -117,7 +117,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       'GymDocID': widget.gymdoc.id,
       'subscriptiondocid': SubDoc.id,
       'clientdocid': widget.account.DocID,
-      'description': "Subscription: " + SubDoc.id + "; Subscription Name: " + subscription.SubscriptionName + "; Price: " + subscription.Price.toString(),
+      'description': "${"Subscription: " + SubDoc.id}; Subscription Name: ${subscription.SubscriptionName}; Price: ${subscription.Price}",
       'prefill': {
         'contact': widget.account.Phone,
         'email': widget.account.Email
@@ -151,9 +151,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       Note: "This subscription is by app",
       PaymentStatus: "Paid",
       PaymentRecieved: true,
-      PaymentMethod: "RazorPay_" + response.orderId.toString(),
+      PaymentMethod: "RazorPay_${response.orderId}",
       PaymentID: response.paymentId,
-      PaymentDetails: response.signature.toString() + ";" + response.orderId.toString(),
+      PaymentDetails: "${response.signature};${response.orderId}",
       PaymentIssue: "No",
       TimeStamp: DateTime.now()
     );
@@ -185,9 +185,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         Note: "This subscription is by Failed during payment.",
         PaymentStatus: "Failed",
         PaymentRecieved: false,
-        PaymentMethod: "RazorPay_" + response.error.toString(),
+        PaymentMethod: "RazorPay_${response.error}",
         PaymentID: response.code,
-        PaymentDetails: response.message.toString() + ";" + response.error.toString(),
+        PaymentDetails: "${response.message};${response.error}",
         PaymentIssue: "Yes",
         TimeStamp: DateTime.now()
     );
@@ -220,8 +220,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(widget.gym.GymName, style: TextStyle(color: ColorFromHexCode("#D71C6B"), fontWeight: FontWeight.bold, fontSize: 50),),
-            SizedBox(height: 30,),
-            Text("Choose Your Subscription", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),),
+            const SizedBox(height: 30,),
+            const Text("Choose Your Subscription", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),),
             Column(
               children: SubscriptionWidget,
             )

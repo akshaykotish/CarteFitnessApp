@@ -4,7 +4,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:infinity/APIs/CurrentLocation.dart';
 
 import '../AppParts/Cookies.dart';
-import '../DataSet/Gym.dart';
 
 class GeoFencing{
 

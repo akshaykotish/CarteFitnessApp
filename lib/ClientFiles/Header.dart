@@ -12,10 +12,10 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 80,
-      child: GymHeader(),
+      child: const GymHeader(),
     );
   }
 }

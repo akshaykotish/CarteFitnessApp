@@ -4,7 +4,6 @@ import 'package:infinity/DataSet/Subscription.dart';
 import 'package:animate_gradient/animate_gradient.dart';
 import '../DataSet/Account.dart';
 import '../DataSet/Gym.dart';
-import '../AppParts/ColorFromHex.dart';
 
 class CurrentSubscription extends StatefulWidget {
   Account account;
@@ -81,8 +80,8 @@ class _CurrentSubscriptionState extends State<CurrentSubscription> {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      margin: EdgeInsets.all(20),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10))
       ),
       child: AnimateGradient(
@@ -101,8 +100,8 @@ class _CurrentSubscriptionState extends State<CurrentSubscription> {
           ColorFromHexCode("#27074D"),
         ],
         child: Container(
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.all(20),
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10))
           ),
           child: Column(
@@ -110,57 +109,57 @@ class _CurrentSubscriptionState extends State<CurrentSubscription> {
               Row(
                 children: <Widget>[
                   Container(
-                    child: Text(gym.GymName.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),),
+                    child: Text(gym.GymName.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),),
                   ),
                 ],
               ),
               Row(
                 children: <Widget>[
                   Container(
-                    child: Text("Membership Card", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.deepPurpleAccent),),
+                    child: const Text("Membership Card", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.deepPurpleAccent),),
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Row(
                 children: <Widget>[
                   Container(
-                    child: Text("Start Date", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15, color: Colors.white),),
+                    child: const Text("Start Date", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15, color: Colors.white),),
                   ),
-                  SizedBox(width: 30,),
+                  const SizedBox(width: 30,),
                   Container(
-                    child: Text("End Date", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15, color: Colors.white),),
+                    child: const Text("End Date", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15, color: Colors.white),),
                   ),
-                  SizedBox(width: 40,),
+                  const SizedBox(width: 40,),
                   Container(
-                    child: Text("Status", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15, color: Colors.white),),
+                    child: const Text("Status", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15, color: Colors.white),),
                   ),
                 ],
               ),
               Row(
                 children: <Widget>[
                   Container(
-                    child: Text(order.StartDate.day.toString() + "/" + order.StartDate.month.toString() + "/" + order.StartDate.year.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.white),),
+                    child: Text("${order.StartDate.day}/${order.StartDate.month}/${order.StartDate.year}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.white),),
                   ),
-                  SizedBox(width: 30,),
+                  const SizedBox(width: 30,),
                   Container(
-                    child: Text(order.EndDate.day.toString() + "/" + order.EndDate.month.toString() + "/" + order.EndDate.year.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.white),),
+                    child: Text("${order.EndDate.day}/${order.EndDate.month}/${order.EndDate.year}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.white),),
                   ),
-                  SizedBox(width: 40,),
+                  const SizedBox(width: 40,),
                   Container(
-                    child: Text(order.Status.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.white),),
+                    child: Text(order.Status.toString(), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: Colors.white),),
                   ),
                 ],
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                    child: Text(widget.account.FullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
+                    child: Text(widget.account.FullName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                   ),
-                  Icon(Icons.door_front_door_outlined, color: Colors.white),
-                  Icon(Icons.network_wifi, color: Colors.white,),
+                  const Icon(Icons.door_front_door_outlined, color: Colors.white),
+                  const Icon(Icons.network_wifi, color: Colors.white,),
                 ],
 
               ),

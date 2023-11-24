@@ -25,7 +25,7 @@ class Gym{
     
     if(gymdoc.exists)
       {
-        gym = await Gym(
+        gym = Gym(
             gymdoc.data()!["GymName"].toString(),
             gymdoc.data()!["Phone"].toString(),
             gymdoc.data()!["Email"].toString(),

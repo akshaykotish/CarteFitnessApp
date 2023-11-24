@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:animate_gradient/animate_gradient.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity/APIs/CurrentLocation.dart';
 import 'package:infinity/APIs/GeoFencing.dart';
 import 'package:infinity/APIs/HandleDoorRequests.dart';
 import 'package:infinity/AppParts/ColorFromHex.dart';
@@ -24,9 +23,9 @@ class _GymDoorWidgetState extends State<GymDoorWidget> {
     setState(() {
 
     });
-    Timer.periodic(Duration(seconds: 15), (timer) async {
+    Timer.periodic(const Duration(seconds: 15), (timer) async {
       bool isit = await GeoFencing.isItinGym();
-      print("Checking:- " + isit.toString());
+      print("Checking:- $isit");
       if(isopen != isit)
         {
           setState(() {
@@ -55,7 +54,7 @@ class _GymDoorWidgetState extends State<GymDoorWidget> {
             width: 250,
             height: 40,
             clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10))
             ),
             child: AnimateGradient(
@@ -67,7 +66,7 @@ class _GymDoorWidgetState extends State<GymDoorWidget> {
                 ColorFromHexCode("#96deda"),
                 ColorFromHexCode("#50c9c3"),
               ],
-              child: Center(child: Row(
+              child: const Center(child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.door_back_door_outlined),

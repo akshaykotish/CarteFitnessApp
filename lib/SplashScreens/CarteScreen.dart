@@ -27,38 +27,38 @@ class _CarteScreenState extends State<CarteScreen> {
     if(ToOpen != null) {
       if(ToOpen == "Home")
       {
-        Timer(Duration(seconds: 5), () async {
+        Timer(const Duration(seconds: 5), () async {
           String? Phone = await Cookies.ReadCookie("Phone");
-          Account account = await Account.PullFromFirebase("+91" + Phone.toString());
+          Account account = await Account.PullFromFirebase("+91$Phone");
           Account.account = account;
-          print("AC " + account.Admin.toString());
+          print("AC ${account.Admin}");
           Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) => Home(account: account)));
         });
       }
       else if(ToOpen == "SetupAddress")
       {
-        Timer(Duration(seconds: 2), () async {
+        Timer(const Duration(seconds: 2), () async {
           String? Phone =await Cookies.ReadCookie("Phone");
-          Account account = await Account.PullFromFirebase("+91" + Phone.toString());
+          Account account = await Account.PullFromFirebase("+91$Phone");
           Navigator.pop(context);
           //Navigator.push(context, MaterialPageRoute(builder: (context) => SetupAddress(account: account)));
         });
       }
       else if(ToOpen == "SetupGym")
       {
-        Timer(Duration(seconds: 5), () async {
+        Timer(const Duration(seconds: 5), () async {
           String? Phone =await Cookies.ReadCookie("Phone");
-          Account account = await Account.PullFromFirebase("+91" + Phone.toString());
+          Account account = await Account.PullFromFirebase("+91$Phone");
           Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) => SetupGym(account: account)));
         });
       }
       else if(ToOpen == "SubscriptionPage")
       {
-        Timer(Duration(seconds: 5), () async {
+        Timer(const Duration(seconds: 5), () async {
           String? Phone =await Cookies.ReadCookie("Phone");
-          Account account = await Account.PullFromFirebase("+91" + Phone.toString());
+          Account account = await Account.PullFromFirebase("+91$Phone");
 
           String GymDocID = await Cookies.ReadCookie("GymDocID");
           Gym gym =  await Gym.GetGym(GymDocID);
@@ -70,12 +70,12 @@ class _CarteScreenState extends State<CarteScreen> {
       }
       else{
         Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
       }
     }
     else{
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
     }
   }
 

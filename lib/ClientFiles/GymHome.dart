@@ -17,14 +17,14 @@ class GymHome extends StatefulWidget {
 class _GymHomeState extends State<GymHome> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height - 130,
       child: Column(
         children: [
           AdminHome(account: widget.account,),
           CurrentSubscription(account: widget.account,),
-          GymDoorWidget(),
-          SizedBox(height: 30,),
+          const GymDoorWidget(),
+          const SizedBox(height: 30,),
           Attendance(account: widget.account,),
         ],
       )

@@ -19,7 +19,7 @@ class Cookies{
   static ReadCookie(key)
   async {
     prefs = await SharedPreferences.getInstance();
-    String? value = await prefs.getString(key);
+    String? value = prefs.getString(key);
     return value;
   }
 
@@ -31,7 +31,7 @@ class Cookies{
   static ReadListCookie(key)
   async {
     prefs = await SharedPreferences.getInstance();
-    var value = await prefs.getStringList(key);
+    var value = prefs.getStringList(key);
     return value;
   }
 

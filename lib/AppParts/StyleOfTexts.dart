@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinity/AppParts/ColorFromHex.dart';
 
@@ -13,14 +12,14 @@ class StyleOfTexts{
   }
 
   static TextStyle NormalText(){
-    return TextStyle(
+    return const TextStyle(
         color: Colors.blue,
         fontWeight: FontWeight.bold
     );
   }
 
   static TextStyle ErrorMessage(){
-    return TextStyle(
+    return const TextStyle(
         color: Colors.red,
         fontWeight: FontWeight.bold
     );

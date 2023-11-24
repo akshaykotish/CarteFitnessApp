@@ -3,7 +3,6 @@ import 'package:infinity/AppParts/ColorFromHex.dart';
 import 'package:infinity/AppParts/Cookies.dart';
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:infinity/AppParts/StyleOfButtons.dart';
 import 'package:infinity/AppParts/StyleOfTexts.dart';
@@ -42,8 +41,8 @@ class _LoginState extends State<Login> {
 
   Future RequestOTP() async{
     _auth.verifyPhoneNumber(
-        phoneNumber: "+91" + Phone.text,
-        timeout: Duration(seconds: 60),
+        phoneNumber: "+91${Phone.text}",
+        timeout: const Duration(seconds: 60),
         verificationCompleted: (PhoneAuthCredential credential) async {
           await _auth.signInWithCredential(credential).then(
                 (value) => print('Logged In Successfully'),
@@ -64,7 +63,7 @@ class _LoginState extends State<Login> {
 
           setState(() {});
 
-          Timer(Duration(seconds: 60), (){
+          Timer(const Duration(seconds: 60), (){
             isReqestOTPAgain = true;
             setState(() {
 
@@ -91,8 +90,8 @@ class _LoginState extends State<Login> {
         .then((value) async {
       print('User Login In Successful');
 
-      Account userData = Account("", "", fullName.text, "+91"+Phone.text, "", "", "", "", "", "", "", "", "", false, DateTime.now(), "");
-      var account = await Account.PullFromFirebase("+91" + Phone.text);
+      Account userData = Account("", "", fullName.text, "+91${Phone.text}", "", "", "", "", "", "", "", "", "", false, DateTime.now(), "");
+      var account = await Account.PullFromFirebase("+91${Phone.text}");
       if(account != null && account.DocID != "")
       {
         account.FullName = fullName.text;
@@ -169,16 +168,16 @@ class _LoginState extends State<Login> {
           top: 0,
           bottom: 0
         ),
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               child: Text("Login", style: TextStyle(color: ColorFromHexCode("#D71C6B"), fontWeight: FontWeight.bold, fontSize: 30),),
             ),
-            SizedBox(height: 50,),
+            const SizedBox(height: 50,),
             Container(
-                margin: EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 20),
                 child: TextField (
                   controller: fullName,
                   decoration: InputDecoration(
@@ -189,15 +188,15 @@ class _LoginState extends State<Login> {
                     hintStyle: TextStyle(color: Colors.grey.shade100),
                     labelStyle: TextStyle(color: Colors.grey.shade100),
                   ),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 )
             ),
             Container(
-                margin: EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 20),
                 child: TextField (
                   controller: Phone,
                   decoration: InputDecoration(
-                      prefix: Text("+91"),
+                      prefix: const Text("+91"),
                       labelText: 'Phone',
                       hintText: '1234567890',
                       fillColor: ColorFromHexCode("#24163A"),
@@ -206,7 +205,7 @@ class _LoginState extends State<Login> {
                   labelStyle: TextStyle(color: Colors.grey.shade100),
                   ),
                   maxLength: 10,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 )
             ),
             Visibility(
@@ -219,25 +218,25 @@ class _LoginState extends State<Login> {
                 child: Container(
                   width: 200,
                   decoration: StyleOfButtons.VerifyButton(),
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                   child: Center(child: Text("Request OTP", style: StyleOfTexts.VerifyButton(),)),
                 ),
               ),
             ),
             Visibility(
               visible: isOTP,
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width/2 + MediaQuery.of(context).size.width/3,
                 height: 80,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width/2,
                       height: 80,
                       child:  TextField (
                         maxLength: 6,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         controller: OTP,
                         decoration: InputDecoration(
                             labelText: 'OTP',
@@ -249,7 +248,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width/3,
                       height: 80,
                       child: Visibility(
@@ -265,7 +264,7 @@ class _LoginState extends State<Login> {
                           child: Container(
                             alignment: Alignment.center,
                             decoration: StyleOfButtons.VerifyButton(),
-                            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                             child: Text("Request OTP", style: StyleOfTexts.VerifyButton(),),
                           ),
                         ),
@@ -283,13 +282,13 @@ class _LoginState extends State<Login> {
                 },
                 child: Container(
                   decoration: StyleOfButtons.VerifyButton(),
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                   child: Text("Verify", style: StyleOfTexts.VerifyButton(),),
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
               child: Text(ErrorMessage, style: StyleOfTexts.ErrorMessage(),),
             ),
           ],

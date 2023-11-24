@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
@@ -8,17 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:infinity/APIs/CurrentLocation.dart';
 import 'package:infinity/APIs/HandleDoorRequests.dart';
 import 'package:infinity/DataSet/Account.dart';
 
 import '../AppParts/Cookies.dart';
-import '../DataSet/Gym.dart';
 import 'GeoFencing.dart';
 
-class BackgroundWorkers{
-
+class BackgroundWorkers {
   // this will be used as notification channel id
   static String notificationChannelId = 'my_foreground';
 
@@ -26,7 +21,6 @@ class BackgroundWorkers{
   static int notificationId = 888;
 
   static initializeService() async {
-
     final service = FlutterBackgroundService();
 
     /// OPTIONAL, using custom notification channel id
@@ -34,12 +28,12 @@ class BackgroundWorkers{
       'my_foreground', // id
       'MY FOREGROUND SERVICE', // title
       description:
-      'This channel is used for important notifications.', // description
+          'This channel is used for important notifications.', // description
       importance: Importance.max, // importance must be at low or higher level
     );
 
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+        FlutterLocalNotificationsPlugin();
 
     if (Platform.isIOS || Platform.isAndroid) {
       await flutterLocalNotificationsPlugin.initialize(
@@ -50,10 +44,9 @@ class BackgroundWorkers{
       );
     }
 
-
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     await service.configure(
@@ -90,13 +83,10 @@ class BackgroundWorkers{
     WidgetsFlutterBinding.ensureInitialized();
     DartPluginRegistrant.ensureInitialized();
 
-
     return true;
   }
 
-  void BGTask(){
-
-  }
+  void BGTask() {}
 
   @pragma('vm:entry-point')
   static void onStart(ServiceInstance service) async {
@@ -107,10 +97,9 @@ class BackgroundWorkers{
     // For flutter prior to version 3.0.0
     // We have to register the plugin manually
 
-
     /// OPTIONAL when use custom notification
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+        FlutterLocalNotificationsPlugin();
 
     if (service is AndroidServiceInstance) {
       service.on('setAsForeground').listen((event) {
@@ -129,21 +118,19 @@ class BackgroundWorkers{
     String? Phone = await Cookies.ReadCookie("Phone");
 
     if (Phone != null) {
-      Account account = await Account.PullFromFirebase(
-          "+91" + Phone.toString());
+      Account account = await Account.PullFromFirebase("+91$Phone");
       Account.account = account;
 
       // bring to foreground
       int UpdateExitTime = 0;
       Timer.periodic(const Duration(seconds: 1), (timer) async {
-
         if (service is AndroidServiceInstance) {
           if (await service.isForegroundService()) {
             bool isit = await GeoFencing.isItinGym();
             if (isit == true) {
-              if(UpdateExitTime == 0) {
-                bool checkthereq = await HandleDoorRequest
-                    .CheckTheLastRequest();
+              if (UpdateExitTime == 0) {
+                bool checkthereq =
+                    await HandleDoorRequest.CheckTheLastRequest();
                 if (checkthereq == true) {
                   HandleDoorRequest.SetLastRequest();
                   HandleDoorRequest.OpenDoor(account);
@@ -154,19 +141,16 @@ class BackgroundWorkers{
               if (UpdateExitTime == 300) {
                 //Update on Firebase
                 Account.MarkAttendanceExit(account.DocID);
-
                 UpdateExitTime = 0;
               }
             }
           }
         }
 
-
         bool isit = await GeoFencing.isItinGym();
         if (isit == true) {
-          if(UpdateExitTime == 0) {
-            bool checkthereq = await HandleDoorRequest
-                .CheckTheLastRequest();
+          if (UpdateExitTime == 0) {
+            bool checkthereq = await HandleDoorRequest.CheckTheLastRequest();
             if (checkthereq == true) {
               HandleDoorRequest.SetLastRequest();
               HandleDoorRequest.OpenDoor(account);
@@ -181,6 +165,7 @@ class BackgroundWorkers{
             UpdateExitTime = 0;
           }
         }
+
         /// you can see this log in logcat
         //print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
 

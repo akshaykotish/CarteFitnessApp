@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:infinity/APIs/CurrentLocation.dart';
 import 'package:infinity/AppParts/Cookies.dart';
-import 'package:infinity/DataSet/Gym.dart';
 
 
 class GymCordsSetup extends StatefulWidget {
@@ -27,7 +26,7 @@ class _GymCordsSetupState extends State<GymCordsSetup> {
   Future<void> GetTheLocation(String key)
   async {
     Position position = await CurrentLocation.GetPositions();
-    cords[key] = position.latitude.toString() + ";" + position.longitude.toString();
+    cords[key] = "${position.latitude};${position.longitude}";
     setState(() {
 
     });
@@ -36,7 +35,7 @@ class _GymCordsSetupState extends State<GymCordsSetup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -48,8 +47,8 @@ class _GymCordsSetupState extends State<GymCordsSetup> {
                 GetTheLocation("A");
               },
               child: Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 color: Colors.grey.shade100,
                 child: Text(cords["A"].toString()),
               ),
@@ -59,8 +58,8 @@ class _GymCordsSetupState extends State<GymCordsSetup> {
                 GetTheLocation("B");
               },
               child: Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 color: Colors.grey.shade100,
                 child: Text(cords["B"].toString()),
               ),
@@ -70,8 +69,8 @@ class _GymCordsSetupState extends State<GymCordsSetup> {
                 GetTheLocation("C");
               },
               child: Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 color: Colors.grey.shade100,
                 child: Text(cords["C"].toString()),
               ),
@@ -81,8 +80,8 @@ class _GymCordsSetupState extends State<GymCordsSetup> {
                 GetTheLocation("D");
               },
               child: Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 color: Colors.grey.shade100,
                 child: Text(cords["D"].toString()),
               ),
@@ -94,10 +93,10 @@ class _GymCordsSetupState extends State<GymCordsSetup> {
                 Navigator.pop(context);
               },
               child: Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 color: Colors.grey.shade100,
-                child: Text("Submit"),
+                child: const Text("Submit"),
               ),
             ),
           ],
