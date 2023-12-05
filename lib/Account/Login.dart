@@ -44,14 +44,11 @@ class _LoginState extends State<Login> {
     _auth.verifyPhoneNumber(
         phoneNumber: "+91${Phone.text}",
         timeout: const Duration(seconds: 60),
+
         verificationCompleted: (PhoneAuthCredential credential) async {
           await _auth.signInWithCredential(credential).then(
-                (value) => print('Logged In Successfully'),
+                (value) => OnSuccessVerification(),
           );
-          progress = false;
-          setState(() {
-
-          });
         },
         verificationFailed: (FirebaseAuthException e) {
           ErrorMessage = "OTP request failed.";
@@ -89,6 +86,97 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Future<void> OnSuccessVerification() async {
+
+    progress = true;
+    ErrorMessage = "OTP verified.";
+    setState(() {
+
+    });
+    Account userData = Account("", "", fullName.text, "+91${Phone.text}", "", "", "", "", "", "", "", "", "", false, DateTime.now(), "");
+    var account = await Account.PullFromFirebase("+91${Phone.text}");
+    if(account != null && account.DocID != "")
+    {
+      ErrorMessage = "Account created.";
+      setState(() {
+
+      });
+      account.FullName = fullName.text;
+      userData = await Account.PushToFirebaseOnID(account, account.DocID);
+    }
+    else{
+      ErrorMessage = "Account created.";
+      setState(() {
+
+      });
+      userData = await Account.PushToFirebase(userData);
+    }
+    //print("DoC ID is " + userData.DocID + " and " + userData.Address1 + " or " + account.Address1);
+
+    progress = false;
+    ErrorMessage = "Login succeed, wait or verify again.";
+    setState(() {
+
+    });
+
+    Cookies.SetCookie("Phone", Phone.text);
+    //Cookies.SetCookie("ToOpen", "Home");
+
+    try {
+
+      ErrorMessage = "Checking active subscription.";
+      setState(() {
+
+      });
+      var CurrentSubscription = await Subscription
+          .GetCurrentSubscriptionOrder(account.DocID);
+      if (CurrentSubscription.length != 0) {
+        Cookies.SetCookie("ToOpen", "Home");
+
+        String GymDocID = CurrentSubscription[0].data()["GymDocID"];
+        String OrderDocID = CurrentSubscription[0].data()["OrderDocID"];
+        String SubscriptionDocID = CurrentSubscription[0]
+            .data()["SubscriptionDocID"];
+
+        Cookies.SetCookie("SubscriptionDocID", SubscriptionDocID);
+        Cookies.SetCookie("GymDocID", GymDocID);
+        Cookies.SetCookie("OrderDocID", OrderDocID);
+
+        Gym.CurrentGym = await Gym.GetGym(GymDocID);
+
+        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Home(account: userData)));
+      }
+      else {
+        Cookies.SetCookie("ToOpen", "SetupGym");
+
+        Navigator.pop(context);
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => SetupGym(account: userData)));
+      }
+    }
+    catch(Exception)
+    {
+
+      ErrorMessage = "Something went wrong.";
+      setState(() {
+
+      });
+      Cookies.SetCookie("ToOpen", "SetupGym");
+
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context) => SetupGym(account: userData)));
+    }
+
+    //Cookies.SetCookie("ToOpen", "SetupGym");
+
+    //Navigator.pop(context);
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => SetupGym(account: userData)));
+  }
+
+
   Future<void> verifyOTPCode() async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: receivedID,
@@ -97,71 +185,15 @@ class _LoginState extends State<Login> {
     await _auth
         .signInWithCredential(credential)
         .then((value) async {
-
-          progress = true;
+      OnSuccessVerification();
+    })
+    .onError((error, stackTrace){
+          ErrorMessage = error.toString();
+          progress = false;
           setState(() {
 
           });
-
-      Account userData = Account("", "", fullName.text, "+91${Phone.text}", "", "", "", "", "", "", "", "", "", false, DateTime.now(), "");
-      var account = await Account.PullFromFirebase("+91${Phone.text}");
-      if(account != null && account.DocID != "")
-      {
-        account.FullName = fullName.text;
-        userData = await Account.PushToFirebaseOnID(account, account.DocID);
-      }
-      else{
-        userData = await Account.PushToFirebase(userData);
-      }
-      //print("DoC ID is " + userData.DocID + " and " + userData.Address1 + " or " + account.Address1);
-
-          progress = false;
-      ErrorMessage = "Login succeed, wait or verify again.";
-      setState(() {
-
       });
-
-      Cookies.SetCookie("Phone", Phone.text);
-      //Cookies.SetCookie("ToOpen", "Home");
-
-      var CurrentSubscription  = await Subscription.GetCurrentSubscriptionOrder(account.DocID);
-      if(CurrentSubscription.length != 0)
-        {
-          Cookies.SetCookie("ToOpen", "Home");
-
-          String GymDocID = CurrentSubscription[0].data()["GymDocID"];
-          String OrderDocID = CurrentSubscription[0].data()["OrderDocID"];
-          String SubscriptionDocID = CurrentSubscription[0].data()["SubscriptionDocID"];
-
-          Cookies.SetCookie("SubscriptionDocID", SubscriptionDocID);
-          Cookies.SetCookie("GymDocID", GymDocID);
-          Cookies.SetCookie("OrderDocID", OrderDocID);
-
-          Gym.CurrentGym = await Gym.GetGym(GymDocID);
-
-          Navigator.pop(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Home(account: userData)));
-        }
-      else{
-        Cookies.SetCookie("ToOpen", "SetupGym");
-
-        Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SetupGym(account: userData)));
-      }
-
-
-      //Cookies.SetCookie("ToOpen", "SetupGym");
-
-      //Navigator.pop(context);
-     // Navigator.push(context, MaterialPageRoute(builder: (context) => SetupGym(account: userData)));
-
-    });
-    // .onError((error, stackTrace){
-    //       ErrorMessage = "Please enter correct OTP.";
-    //       setState(() {
-    //
-    //       });
-    //   });
   }
 
   @override
@@ -297,6 +329,10 @@ class _LoginState extends State<Login> {
               visible: isVerify,
               child: GestureDetector(
                 onTap: (){
+                  progress = true;
+                  setState(() {
+
+                  });
                   verifyOTPCode();
                 },
                 child: Container(
@@ -308,11 +344,11 @@ class _LoginState extends State<Login> {
             ),
             Visibility(
               visible: progress,
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(18.0),
                   child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
+                           color: Colors.white,
+                         ),
                 )),
             Container(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),

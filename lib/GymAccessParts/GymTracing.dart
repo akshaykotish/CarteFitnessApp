@@ -29,14 +29,14 @@ class _GymTracingState extends State<GymTracing> {
 
   Future<void> StartTracing() async {
     print("Start");
-    var wigs = <Widget>[];
+    var _wigs = <Widget>[];
     timer = Timer.periodic(const Duration(milliseconds: 500), (timer) async {
       var Position = await CurrentLocation.GetPositions();
       Lats.add(Position.latitude);
       Longs.add(Position.longitude);
-      wigs.add(Container(child: Text("${Position.latitude} ${Position.longitude}"),));
+      _wigs.add(Container(child: Text("${Position.latitude} ${Position.longitude}"),));
       setState(() {
-        wigs = wigs;
+        wigs = _wigs;
       });
     });
   }

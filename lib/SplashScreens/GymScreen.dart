@@ -43,9 +43,8 @@ class _GymScreenState extends State<GymScreen> {
         Gym.CurrentGym = await Gym.GetGym(GymDocID);
         Cookies.SetCookie("GymName", Gym.CurrentGym.GymName);
         GYMNAME = Gym.CurrentGym.GymName;
-        setState(() {
-
-        });
+        try {setState(() {});}
+        catch(e){}
     }
   }
 

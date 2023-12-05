@@ -67,7 +67,6 @@ class _SetupGymState extends State<SetupGym> {
 
 
   void OnGymClick(gym, gymdata){
-    print(gymdata.id);
     Cookies.SetCookie("GymDocID", gymdata.id);
     Cookies.SetCookie("ToOpen", "SubscriptionPage");
     Navigator.pop(context);

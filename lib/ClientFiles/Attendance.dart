@@ -99,7 +99,7 @@ class _AttendanceState extends State<Attendance> {
               padding: const EdgeInsets.all(10),
               child: Text("Attendance", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorFromHexCode("#ECF5FF")),)),
           SizedBox(
-            height: MediaQuery.of(context).size.height/2 - 100,
+            height: MediaQuery.of(context).size.height/2 - 150,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               child: Column(

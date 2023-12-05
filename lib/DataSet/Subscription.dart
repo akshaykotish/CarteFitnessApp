@@ -16,7 +16,7 @@ class Subscription{
 
   static LoadSubscriptions(String GymDocID)
   async {
-    var Subscriptions = await FirebaseFirestore.instance.collection("Gym").doc(GymDocID).collection("SubScriptions").get();
+    var Subscriptions = await FirebaseFirestore.instance.collection("Gym").doc(GymDocID).collection("SubScriptions").orderBy("Months",descending: false).get();
     return Subscriptions.docs;
   }
 

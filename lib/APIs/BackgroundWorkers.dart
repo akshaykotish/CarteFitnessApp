@@ -122,16 +122,25 @@ class BackgroundWorkers {
       Account.account = account;
 
       // bring to foreground
+      bool laststatus = false;
       int UpdateExitTime = 0;
       Timer.periodic(const Duration(seconds: 1), (timer) async {
         if (service is AndroidServiceInstance) {
           if (await service.isForegroundService()) {
             bool isit = await GeoFencing.isItinGym();
+            print("ITs running = " + isit.toString());
             if (isit == true) {
+              if(laststatus != isit)
+                {
+                  print("DSMi");
+                  UpdateExitTime = 0;
+                }
               if (UpdateExitTime == 0) {
+                print("DSMi");
                 bool checkthereq =
                     await HandleDoorRequest.CheckTheLastRequest();
                 if (checkthereq == true) {
+                  print("Door Unlocked");
                   HandleDoorRequest.SetLastRequest();
                   HandleDoorRequest.OpenDoor(account);
                   Account.MarkAttendanceEntry(account.DocID);
@@ -142,8 +151,10 @@ class BackgroundWorkers {
                 //Update on Firebase
                 Account.MarkAttendanceExit(account.DocID);
                 UpdateExitTime = 0;
+                //service.setAsForegroundService();
               }
             }
+            laststatus = isit;
           }
         }
 
@@ -163,6 +174,7 @@ class BackgroundWorkers {
             Account.MarkAttendanceExit(account.DocID);
 
             UpdateExitTime = 0;
+            //FlutterBackgroundService().invoke("setAsForeground");
           }
         }
 

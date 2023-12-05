@@ -23,6 +23,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   var SubscriptionWidget = <Widget>[];
 
+  TextEditingController ReferalCode = TextEditingController();
   late Subscription subscription_onclick;
 
   Future<void> LoadSubscription()
@@ -136,7 +137,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
 
   Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
-
+    Cookies.SetCookie("ToOpen", "Home");
     String GymDocID = await Cookies.ReadCookie("GymDocID");
     String SubscriptionDocID = await Cookies.ReadCookie("SubscriptionDocID");
 
@@ -166,7 +167,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(builder: (context) => Home(account: widget.account,)));
-    Cookies.SetCookie("ToOpen", "Home");
+
   }
 
   Future<void> _handlePaymentError(PaymentFailureResponse response) async {
@@ -222,17 +223,42 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             color: ColorFromHexCode("#130B20"),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(widget.gym.GymName, style: TextStyle(color: ColorFromHexCode("#D71C6B"), fontWeight: FontWeight.bold, fontSize: 35),),
-              const SizedBox(height: 30,),
-              const Text("Choose Your Subscription", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),),
-              Column(
-                children: SubscriptionWidget,
-              )
-            ],
+          padding: EdgeInsets.only(
+            top: 50,
+            left: 10,
+            right: 10,
+            bottom: 10
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(widget.gym.GymName, style: TextStyle(color: ColorFromHexCode("#D71C6B"), fontWeight: FontWeight.bold, fontSize: 35),),
+                const SizedBox(height: 30,),
+                const Text("Choose Your Subscription", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),),
+                Column(
+                  children: SubscriptionWidget,
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: TextField (
+                    controller: ReferalCode,
+                    decoration: InputDecoration(
+                        labelText: 'Referal Code',
+                        hintText: 'AKS100',
+                        fillColor: ColorFromHexCode("#24163A"),
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.grey.shade100),
+                        labelStyle: TextStyle(color: Colors.grey.shade100),
+                        suffixIcon: Icon(Icons.arrow_forward_ios, color: Colors.white,)
+                    ),
+                    maxLength: 20,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
           )
         ),
       ),

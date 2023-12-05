@@ -23,7 +23,7 @@ class _GymDoorWidgetState extends State<GymDoorWidget> {
     setState(() {
 
     });
-    Timer.periodic(const Duration(seconds: 15), (timer) async {
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
       bool isit = await GeoFencing.isItinGym();
       print("Checking:- $isit");
       if(isopen != isit)
